@@ -8,7 +8,6 @@
 
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
-#include "CircularBuffer.h"
 
 //==============================================================================
 StatikDistortionAudioProcessor::StatikDistortionAudioProcessor()
@@ -94,11 +93,11 @@ void StatikDistortionAudioProcessor::changeProgramName (int index, const juce::S
 //==============================================================================
 void StatikDistortionAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
-        for (int channel = 0; channel < getTotalNumOutputChannels(); channel++) {
-            allBuffers.add(CircularBuffer(10, 1));
-        }
-        gain = 1.0f;
-        peak = 0.0f;
+//        for (int channel = 0; channel < getTotalNumOutputChannels(); channel++) {
+//            allBuffers.add(CircularBuffer(10, 1));
+//        }
+//        gain = 1.0f;
+//        peak = 0.0f;
 }
 
 void StatikDistortionAudioProcessor::releaseResources()
@@ -139,48 +138,15 @@ void StatikDistortionAudioProcessor::processBlock (juce::AudioBuffer<float>& buf
     auto totalNumInputChannels  = getTotalNumInputChannels();
     auto totalNumOutputChannels = getTotalNumOutputChannels();
 
-
-    float coeff;
     float drive = *apvts.getRawParameterValue("Drive");
     float range = *apvts.getRawParameterValue("Distortion");
     float blend = *apvts.getRawParameterValue("Mix");
-    float threshold = *apvts.getRawParameterValue("Threshold");
-    float attackTime = *apvts.getRawParameterValue("Attack");
-    float releaseTime = *apvts.getRawParameterValue("Release");
-    
-    
-    for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i) {
+    float volume = *apvts.getRawParameterValue("Volume");
+ 
+    for (auto i = totalNumInputChannels; i < totalNumOutputChannels; i++) {
             buffer.clear (i, 0, buffer.getNumSamples());
     }
-      for (int i = 0; i < buffer.getNumSamples(); i++) {
-          for (int channel = 0; channel < totalNumOutputChannels; channel++) {
-              auto* data = buffer.getWritePointer(channel);
-              CircularBuffer* delayBuffer = &allBuffers.getReference(channel);
-
-              float sample = data[i];
-
-              float amplitude = abs(sample);
-              
-              if (amplitude > peak) coeff = attackTime;
-              else coeff = releaseTime;
-
-              peak = (1 - coeff) * peak + coeff * amplitude;
-
-              float filter = fmin(1.0f, threshold / peak);
-
-              if (gain > filter) coeff = attackTime;
-              else coeff = releaseTime;
-
-              gain = (1 - coeff) * gain + coeff * filter;
-
-              float limitedSample = gain * delayBuffer->getData();
-              delayBuffer->setData(sample);
-              delayBuffer->nextSample();
-
-              data[i] = limitedSample;
-          }
-      }
-
+    
     for (int channel = 0; channel < totalNumInputChannels; ++channel)
     {
         auto* channelData = buffer.getWritePointer (channel);
@@ -191,7 +157,7 @@ void StatikDistortionAudioProcessor::processBlock (juce::AudioBuffer<float>& buf
 
             *channelData *= drive * range;
 
-            *channelData = (((((2 / juce::float_Pi) * atan(*channelData) * blend) + (cleanSignal * (1.f - blend))) / 2.f));
+            *channelData = (((((2 / juce::float_Pi) * atan(*channelData) * blend) + (cleanSignal * (1.f - blend))) / 2.f) * volume);
 
             channelData++;
         }
@@ -232,9 +198,7 @@ ChainSettings getChainSettings (juce::AudioProcessorValueTreeState& apvts) {
     settings.Drive = apvts.getRawParameterValue("Drive")->load();
     settings.Distortion = apvts.getRawParameterValue("Distortion")->load();
     settings.Mix = apvts.getRawParameterValue("Mix")->load();
-    settings.threshold = apvts.getRawParameterValue("Threshold")->load();
-    settings.attackTime = apvts.getRawParameterValue("Attack")->load();
-    settings.releaseTime = apvts.getRawParameterValue("Release")->load();
+    settings.Volume = apvts.getRawParameterValue("Volume")->load();
 
     return settings;
 }
@@ -244,18 +208,14 @@ juce::AudioProcessorValueTreeState::ParameterLayout StatikDistortionAudioProcess
 {
     juce::AudioProcessorValueTreeState::ParameterLayout parameters;
     
-    parameters.add(std::make_unique<juce::AudioParameterFloat>("Drive", "Drive", juce::NormalisableRange<float>(0.01f, 1.0f, 0.0001f),1.0f));
+    parameters.add(std::make_unique<juce::AudioParameterFloat>("Drive", "Drive", juce::NormalisableRange<float>(0.01f, 1.0f, 0.0001f),0.0f));
     
-    parameters.add(std::make_unique<juce::AudioParameterFloat>("Distortion", "Distortion", juce::NormalisableRange<float>(0.01f, 25.f, 0.00001), 1.0f));
+    parameters.add(std::make_unique<juce::AudioParameterFloat>("Distortion", "Distortion", juce::NormalisableRange<float>(0.01f, 25.f, 0.00001), 0.0f));
     
-    parameters.add(std::make_unique<juce::AudioParameterFloat>("Mix", "Mix", juce::NormalisableRange<float>(0.01f, 10.0f, 0.00001), 1.0f));
+    parameters.add(std::make_unique<juce::AudioParameterFloat>("Mix", "Mix", juce::NormalisableRange<float>(0.01f, 10.0f, 0.00001), 0.0f));
 
-    parameters.add(std::make_unique<juce::AudioParameterFloat>("Threshold", "Threshold", juce::NormalisableRange<float>(-60.0f, 10.0f, 0.00001), 1.0f));
-
-    parameters.add(std::make_unique<juce::AudioParameterFloat>("Attack", "Attack", juce::NormalisableRange<float>(0.0f, 10.0f, 0.00001), 1.0f));
-
-    parameters.add(std::make_unique<juce::AudioParameterFloat>("Release", "Release", juce::NormalisableRange<float>(0.0f, 10.0f, 0.00001), 1.0f));
-//    
+    parameters.add(std::make_unique<juce::AudioParameterFloat>("Volume", "Volume", juce::NormalisableRange<float>(0.0f, 1.0f, 0.00001), 0.0f));
+    
     return parameters;
 
 }

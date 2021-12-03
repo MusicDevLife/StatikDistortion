@@ -12,10 +12,6 @@
             file="Source/PluginEditor.cpp"/>
       <FILE id="ACquOg" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
     </GROUP>
-    <FILE id="zPtQrA" name="CircularBuffer.cpp" compile="1" resource="0"
-          file="Source/CircularBuffer.cpp"/>
-    <FILE id="nu8k5N" name="CircularBuffer.h" compile="0" resource="0"
-          file="Source/CircularBuffer.h"/>
     <FILE id="vXnwao" name="CustomSlider.cpp" compile="1" resource="0"
           file="Source/CustomSlider.cpp"/>
     <FILE id="vZmC0T" name="CustomSlider.h" compile="0" resource="0" file="Source/CustomSlider.h"/>

@@ -9,7 +9,7 @@
 #pragma once
 
 #include <JuceHeader.h>
-#include "CircularBuffer.h"
+
 
 //==============================================================================
 /**
@@ -17,8 +17,8 @@
 
 struct ChainSettings {
     
-    float Drive {0}, Distortion {0}, Mix {0};
-    float threshold {0}, attackTime {0}, releaseTime {0};
+    float Drive {0}, Distortion {0}, Mix {0}, Volume {0};
+
 };
 
 class StatikDistortionAudioProcessor  : public juce::AudioProcessor
@@ -68,9 +68,6 @@ public:
     juce::AudioProcessorValueTreeState apvts {*this, nullptr, "Parameters", createParameterLayout()};
     
 private:
-    float gain;
-    float peak;
-    juce::Array<CircularBuffer> allBuffers;
 
     
     //==============================================================================

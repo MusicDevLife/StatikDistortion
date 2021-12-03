@@ -34,25 +34,18 @@ private:
     CustomDial driveKnob;
     CustomDial rangeKnob;
     CustomDial blendKnob;
-    CustomDial thresholdKnob;
-    CustomDial limitAttackKnob;
-    CustomDial limitReleaseKnob;
+    CustomDial volumeKnob;
+
 
     juce::Label driveLabel;
     juce::Label rangeLabel;
     juce::Label blendLabel;
+    juce::Label volumeLabel;
     
     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> driveAttachment;
     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> rangeAttachment;
     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> blendAttachment;
-    std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> thresholdAttachment;
-    std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> limitAttackAttachment;
-    std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> limitReleaseAttachment;
-    
-  
-    juce::Label thresholdLabel;
-    juce::Label limitAttackLabel;
-    juce::Label limitReleaseLabel;
+    std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> volumeAttachment;
     
     StatikDistortionAudioProcessor& audioProcessor;
 
