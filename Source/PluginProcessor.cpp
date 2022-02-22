@@ -208,13 +208,13 @@ juce::AudioProcessorValueTreeState::ParameterLayout StatikDistortionAudioProcess
 {
     juce::AudioProcessorValueTreeState::ParameterLayout parameters;
     
-    parameters.add(std::make_unique<juce::AudioParameterFloat>("Drive", "Drive", juce::NormalisableRange<float>(0.01f, 1.0f, 0.0001f),0.0f));
+    parameters.add(std::make_unique<juce::AudioParameterFloat>("Drive", "Drive", juce::NormalisableRange<float>(0.00f, 1.0f, 0.01f),0.0f));
     
-    parameters.add(std::make_unique<juce::AudioParameterFloat>("Distortion", "Distortion", juce::NormalisableRange<float>(0.01f, 25.f, 0.00001), 0.0f));
+    parameters.add(std::make_unique<juce::AudioParameterFloat>("Distortion", "Distortion", juce::NormalisableRange<float>(0.00f, 25.f, 0.01f), 0.0f));
     
-    parameters.add(std::make_unique<juce::AudioParameterFloat>("Mix", "Mix", juce::NormalisableRange<float>(0.01f, 10.0f, 0.00001), 0.0f));
+    parameters.add(std::make_unique<juce::AudioParameterFloat>("Mix", "Mix", juce::NormalisableRange<float>(0.00f, 100.0f, 1.0), 0.0f));
 
-    parameters.add(std::make_unique<juce::AudioParameterFloat>("Volume", "Volume", juce::NormalisableRange<float>(0.0f, 1.0f, 0.00001), 0.0f));
+    parameters.add(std::make_unique<juce::AudioParameterFloat>("Volume", "Volume", juce::NormalisableRange<float>(-5.0f, 5.0f, 0.01f), 0.0f));
     
     return parameters;
 

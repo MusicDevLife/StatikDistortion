@@ -30,6 +30,8 @@ StatikDistortionAudioProcessorEditor::~StatikDistortionAudioProcessorEditor()
 
 void StatikDistortionAudioProcessorEditor::Distortion() {
     addAndMakeVisible(driveKnob);
+    driveKnob.setTextBoxStyle (juce::Slider::TextBoxBelow, false, 100, driveKnob.getTextBoxHeight());
+//    driveKnob.setSkewFactorFromMidPoint (0.50f);
     driveLabel.setText ("Drive", juce::dontSendNotification);
     driveLabel.setJustificationType(juce::Justification::centred);
     driveLabel.attachToComponent(&driveKnob, false);
@@ -37,18 +39,21 @@ void StatikDistortionAudioProcessorEditor::Distortion() {
 
 
     addAndMakeVisible(rangeKnob);
+    rangeKnob.setTextBoxStyle (juce::Slider::TextBoxBelow, false, 100, rangeKnob.getTextBoxHeight());
     rangeLabel.setText ("Range", juce::dontSendNotification);
     rangeLabel.attachToComponent(&rangeKnob, false);
     rangeLabel.setJustificationType(juce::Justification::centred);
     rangeAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.apvts, "Distortion", rangeKnob);
 
     addAndMakeVisible(blendKnob);
+    blendKnob.setTextBoxStyle (juce::Slider::TextBoxBelow, false, 100, blendKnob.getTextBoxHeight());
     blendLabel.setText ("Mix", juce::dontSendNotification);
     blendLabel.attachToComponent(&blendKnob, false);
     blendLabel.setJustificationType(juce::Justification::centred);
     blendAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.apvts, "Mix", blendKnob);
     
     addAndMakeVisible(volumeKnob);
+    volumeKnob.setTextBoxStyle (juce::Slider::TextBoxBelow, false, 100, volumeKnob.getTextBoxHeight());
     volumeLabel.setText ("Volume", juce::dontSendNotification);
     volumeLabel.attachToComponent(&volumeKnob, false);
     volumeLabel.setJustificationType(juce::Justification::centred);

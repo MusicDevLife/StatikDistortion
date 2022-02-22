@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="Yy8KEb" name="StatikDistortion" projectType="audioplug" useAppConfig="0"
-              addUsingNamespaceToJuceHeader="0" jucerFormatVersion="1" cppLanguageStandard="17">
-  <MAINGROUP id="uuc0NY" name="StatikDistortion">
+<JUCERPROJECT id="Yy8KEb" name="Statik Distortion" projectType="audioplug"
+              addUsingNamespaceToJuceHeader="0" jucerFormatVersion="1" cppLanguageStandard="17"
+              companyName="STATIK LNK FXs" pluginCharacteristicsValue="pluginIsMidiEffectPlugin"
+              pluginFormats="buildAU,buildAUv3,buildStandalone,buildVST3" useAppConfig="0"
+              companyCopyright="STATIK LNK FXs 2021">
+  <MAINGROUP id="uuc0NY" name="Statik Distortion">
     <GROUP id="{06EFD1DF-B3A2-963D-DBEC-CEF42E9F6ABA}" name="Source">
+      <FILE id="Xbkob3" name="CustomSlider.cpp" compile="1" resource="0"
+            file="Source/CustomSlider.cpp"/>
+      <FILE id="HVOUkK" name="CustomSlider.h" compile="0" resource="0" file="Source/CustomSlider.h"/>
       <FILE id="PkMQyR" name="PluginProcessor.cpp" compile="1" resource="0"
             file="Source/PluginProcessor.cpp"/>
       <FILE id="LATOU4" name="PluginProcessor.h" compile="0" resource="0"
@@ -12,20 +18,15 @@
             file="Source/PluginEditor.cpp"/>
       <FILE id="ACquOg" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
     </GROUP>
-    <FILE id="vXnwao" name="CustomSlider.cpp" compile="1" resource="0"
-          file="Source/CustomSlider.cpp"/>
-    <FILE id="vZmC0T" name="CustomSlider.h" compile="0" resource="0" file="Source/CustomSlider.h"/>
-    <GROUP id="{425FD8DB-5123-E2E3-F185-D67DD9F796D1}" name="Resources">
-      <FILE id="REyQEh" name="StatikDistortionImage.jpg" compile="0" resource="1"
-            file="StatikDistortionImage.jpg"/>
-    </GROUP>
+    <FILE id="Liv0DB" name="StatikDistortionImage.jpg" compile="0" resource="1"
+          file="StatikDistortionImage.jpg"/>
   </MAINGROUP>
   <JUCEOPTIONS JUCE_STRICT_REFCOUNTEDPOINTER="1" JUCE_VST3_CAN_REPLACE_VST2="0"/>
   <EXPORTFORMATS>
     <XCODE_IPHONE targetFolder="Builds/iOS">
       <CONFIGURATIONS>
-        <CONFIGURATION isDebug="1" name="Debug" targetName="StatikDistortion"/>
-        <CONFIGURATION isDebug="0" name="Release" targetName="StatikDistortion"/>
+        <CONFIGURATION isDebug="1" name="Debug" targetName="StatikDistortion" codeSigningIdentity="PN638PH56P"/>
+        <CONFIGURATION isDebug="0" name="Release" targetName="StatikDistortion" codeSigningIdentity="PN638PH56P"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_audio_basics" path="../JUCE/modules"/>
@@ -44,8 +45,8 @@
     </XCODE_IPHONE>
     <XCODE_MAC targetFolder="Builds/MacOSX">
       <CONFIGURATIONS>
-        <CONFIGURATION isDebug="1" name="Debug" targetName="StatikDistortion"/>
-        <CONFIGURATION isDebug="0" name="Release" targetName="StatikDistortion"/>
+        <CONFIGURATION isDebug="1" name="Debug" targetName="StatikDistortion" codeSigningIdentity="PN638PH56P"/>
+        <CONFIGURATION isDebug="0" name="Release" targetName="StatikDistortion" codeSigningIdentity="PN638PH56P"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_audio_basics" path="../JUCE/modules"/>
